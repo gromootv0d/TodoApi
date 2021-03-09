@@ -4,6 +4,7 @@ using TodoApi;
 using TodoApi.Models;
 using TodoApi.Controllers;
 using Moq;
+using TodoApi.Services;
 
 namespace TodoApiTests
 {
@@ -12,7 +13,7 @@ namespace TodoApiTests
         private TodoContext sut;
         private readonly Mock<ITodoApiRepository> repository = new Mock<ITodoApiRepository>();
         [Fact]
-        public void GetAnswerOk()
+        public async void GetAnswerOk()
         {
             repository.Setup(m => m.GetTodoContext()).CallBase();
             var target = new TodoItemsController(sut);
