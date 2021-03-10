@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
+using TodoApi.Services;
+using TodoApi.Repositories;
 
 namespace TodoApi
 {
@@ -23,6 +25,7 @@ namespace TodoApi
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
+            services.AddSingleton<ITodoApiRepository, TodoApiRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

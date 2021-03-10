@@ -8,8 +8,12 @@ using TodoApi.Repositories;
 
 namespace TodoApi.Services
 {
-    public interface ITodoApiRepository
+    public interface ITodoApiRepository 
     {
-        public Task<ActionResult<IEnumerable<TodoItem>>> GetTodoContext();
+        public Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems();
+        public Task<ActionResult<TodoItem>> GetTodoItem(long id);
+        public Task<IActionResult> PutTodoItem(long id, TodoItem todoItem);
+        public Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem);
+        public Task<IActionResult> DeleteTodoItem(long id);
     }
 }
