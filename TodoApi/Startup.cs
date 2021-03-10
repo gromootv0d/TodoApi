@@ -25,7 +25,7 @@ namespace TodoApi
             services.AddDbContext<TodoContext>(opt =>
                                                opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
-            services.AddSingleton<ITodoApiRepository, TodoApiRepository>();
+            services.AddScoped<ITodoApiRepository, TodoApiRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
