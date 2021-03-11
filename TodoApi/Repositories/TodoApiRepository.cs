@@ -41,7 +41,6 @@ namespace TodoApi.Repositories
             {
                 if (!TodoItemExists(id))
                 {
-                    //return NotFound();
                     return false;
                 }
                 else
@@ -64,14 +63,12 @@ namespace TodoApi.Repositories
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
-                //return NotFound();
                 return false;
             }
 
             _context.TodoItems.Remove(todoItem);
             await _context.SaveChangesAsync();
             return true;
-            //return NoContent();
         }
 
         bool TodoItemExists(long id)
