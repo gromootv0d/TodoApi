@@ -31,8 +31,16 @@ namespace TodoApi.Controllers
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
-        {
-             return await _repository.GetTodoItem(id);
+        { 
+             var item = await _repository.GetTodoItem(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return item;
+            }
         }
 
         // PUT: api/TodoItems/5
@@ -40,7 +48,14 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
-             return await _repository.PutTodoItem(id, todoItem);
+            if (id != todoItem.Id)
+            {
+                return BadRequest();
+            }
+            bool result =  await _repository.PutTodoItem(id, todoItem);
+            if (result) return NoContent();
+            else return NotFound();
+
         }
 
         // POST: api/TodoItems
@@ -48,14 +63,16 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
-            return await _repository.PostTodoItem(todoItem);
+            await _repository.PostTodoItem(todoItem);
+            return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         }
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
-            return await _repository.DeleteTodoItem(id);
+            if (await _repository.DeleteTodoItem(id)) return NoContent();
+            else return NotFound();
         }
         
     }

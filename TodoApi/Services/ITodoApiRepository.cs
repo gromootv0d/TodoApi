@@ -12,8 +12,8 @@ namespace TodoApi.Services
     {
         public Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems();
         public Task<ActionResult<TodoItem>> GetTodoItem(long id);
-        public Task<IActionResult> PutTodoItem(long id, TodoItem todoItem);
-        public Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem);
-        public Task<IActionResult> DeleteTodoItem(long id);
+        public Task<bool> PutTodoItem(long id, TodoItem todoItem);
+        public Task<bool> PostTodoItem(TodoItem todoItem);
+        public Task<bool> DeleteTodoItem(long id);
     }
 }
