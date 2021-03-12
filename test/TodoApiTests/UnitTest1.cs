@@ -32,9 +32,23 @@ namespace TodoApiTests
         public void GetAnswer404(long value)
         {
             var result = this.sut.GetTodoItem(value);
-            Assert.NotNull(result);
             Assert.Equal(404, ((StatusCodeResult)result.Result.Result).StatusCode);
         }
-
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void GetAnswer400(int id)
+        {
+            TodoItem item = new TodoItem();
+            var result = this.sut.PutTodoItem(id, item);
+            Assert.Equal(400, ((StatusCodeResult)result.Result).StatusCode);
+        }
+        public void GetAnswer415(int id)
+        {
+            TodoItem item = new TodoItem();
+            var result = this.sut.PostTodoItem();
+            Assert.Equal(400, ((StatusCodeResult)result.Result).StatusCode);
+        }
     }
 }
