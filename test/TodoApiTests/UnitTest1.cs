@@ -5,20 +5,36 @@ using TodoApi.Models;
 using TodoApi.Controllers;
 using Moq;
 using TodoApi.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApiTests
 {
     public class UnitTest1
     {
-        private TodoContext sut;
+        private TodoItemsController sut;
         private readonly Mock<ITodoApiRepository> repository = new Mock<ITodoApiRepository>();
-        [Fact]
-        public async void GetAnswerOk()
+        public UnitTest1()
         {
-            //repository.Setup(m => m.GetTodoItems()).CallBase();
-            //var target = new TodoItemsController(sut);
-            //var result = target.GetTodoItems();
-            //Assert.NotNull(result);
+            var options = new Mock<ITodoApiRepository>();
+            this.sut = new TodoItemsController(this.repository.Object);
         }
+        
+        [Fact]
+        public void GetAnswerNotNull()
+        {   
+            var result = this.sut.GetTodoItems();
+            Assert.NotNull(result);
+        }
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void GetAnswer404(long value)
+        {
+            var result = this.sut.GetTodoItem(value);
+            Assert.NotNull(result);
+            Assert.Equal(404, ((StatusCodeResult)result.Result.Result).StatusCode);
+        }
+
     }
 }
