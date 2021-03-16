@@ -15,7 +15,6 @@ namespace TodoApiTests
         private readonly Mock<ITodoApiRepository> repository = new Mock<ITodoApiRepository>();
         public UnitTest1()
         {
-            var options = new Mock<ITodoApiRepository>();
             this.sut = new TodoItemsController(this.repository.Object);
         }
         
