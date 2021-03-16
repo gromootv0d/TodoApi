@@ -6,6 +6,8 @@ using TodoApi.Controllers;
 using Moq;
 using TodoApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Collections.Generic;
 
 namespace TodoApiTests
 {
@@ -20,7 +22,8 @@ namespace TodoApiTests
         
         [Fact]
         public void GetTodoItemsShouldNotNullActionResult()
-        {   
+        {
+            this.repository.Setup(c => c.GetTodoItems()).ReturnsAsync(new List<TodoItem>());
             var result = this.sut.GetTodoItems();
             Assert.NotNull(result);
         }
